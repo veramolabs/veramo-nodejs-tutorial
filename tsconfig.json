@@ -2,8 +2,9 @@
     "compilerOptions": {
       "preserveConstEnums": true,
       "strict": true,
-      "target": "es6",
       "rootDir": "./",
+      "target": "esnext",
+      "module": "esnext",
       "moduleResolution": "node",
       "esModuleInterop": true,
       "downlevelIteration": true
