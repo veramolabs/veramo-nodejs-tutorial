@@ -8,17 +8,18 @@
     "typescript": "^4.8.4"
   },
   "dependencies": {
-    "@veramo/core": "^4.0.0",
-    "@veramo/credential-w3c": "^4.0.2",
-    "@veramo/data-store": "^4.0.2",
-    "@veramo/did-manager": "^4.0.0",
-    "@veramo/did-provider-ethr": "^4.0.0",
-    "@veramo/did-provider-web": "^4.0.0",
-    "@veramo/did-resolver": "^4.0.2",
-    "@veramo/key-manager": "^4.0.2",
-    "@veramo/kms-local": "^4.0.2",
+    "@veramo/core": "4.2.1-unstable.9",
+    "@veramo/credential-w3c": "4.2.1-unstable.9",
+    "@veramo/data-store": "4.2.1-unstable.9",
+    "@veramo/did-manager": "4.2.1-unstable.9",
+    "@veramo/did-provider-ethr": "4.2.1-unstable.9",
+    "@veramo/did-provider-web": "4.2.1-unstable.9",
+    "@veramo/did-resolver": "4.2.1-unstable.9",
+    "@veramo/key-manager": "4.2.1-unstable.9",
+    "@veramo/kms-local": "4.2.1-unstable.9",
     "ethr-did-resolver": "^7.0.2",
     "sqlite3": "^5.1.2",
     "web-did-resolver": "^2.0.21"
-  }
+  },
+  "type": "module"
 }
