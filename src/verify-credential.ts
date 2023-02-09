@@ -1,6 +1,7 @@
-import { agent } from './veramo/setup'
+const { getAgent } = require('./veramo/setup')
 
 async function main() {
+  const agent = await getAgent()
   const result = await agent.verifyCredential({
     credential: {
       "credentialSubject": {
@@ -27,3 +28,4 @@ async function main() {
 }
 
 main().catch(console.log)
+export {}

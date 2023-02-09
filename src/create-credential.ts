@@ -1,6 +1,7 @@
-import { agent } from './veramo/setup'
+const { getAgent } = require('./veramo/setup')
 
 async function main() {
+  const agent = await getAgent()
   const identifier = await agent.didManagerGetByAlias({ alias: 'default' })
 
   const verifiableCredential = await agent.createVerifiableCredential({
@@ -18,3 +19,4 @@ async function main() {
 }
 
 main().catch(console.log)
+export {}
