@@ -3,8 +3,10 @@
     "preserveConstEnums": true,
     "strict": true,
     "target": "es6",
+    "module": "commonjs",
+    "lib": ["es6"],
     "rootDir": "./",
-    "moduleResolution": "node",
+    "moduleResolution": "nodenext",
     "esModuleInterop": true,
     "downlevelIteration": true
   }
