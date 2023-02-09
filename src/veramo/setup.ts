@@ -10,11 +10,9 @@ const KMS_SECRET_KEY =
 const { Resolver } = require('did-resolver')
 const { getResolver: ethrDidResolver } = require('ethr-did-resolver')
 const { getResolver: webDidResolver } = require('web-did-resolver')
-import { TAgent } from '@veramo/core-types'
+import { TAgent, IDIDManager, IResolver, IDataStore, IKeyManager } from '@veramo/core-types'
 
-const _importDynamic = new Function('modulePath', 'return import(modulePath)')
-
-async function getAgent2(): Promise<TAgent<any>> {
+async function getAgent2(): Promise<TAgent<IDIDManager & IKeyManager & IDataStore & IResolver>> {
   // Core interfaces
   const { createAgent } = await import('@veramo/core')
 
@@ -54,7 +52,7 @@ async function getAgent2(): Promise<TAgent<any>> {
     entities: Entities,
     })
 
-  const agent = createAgent({
+  const agent = createAgent<IDIDManager & IKeyManager & IDataStore & IResolver>({
     plugins: [
       new KeyManager({
         // @ts-ignore
