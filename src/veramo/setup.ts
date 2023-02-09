@@ -66,12 +66,12 @@ async function getAgent(): Promise<TAgent<IDIDManager & IKeyManager & IDataStore
       }),
       new DIDManager({
         store: new DIDStore(dbConnection),
-        defaultProvider: 'did:ethr:rinkeby',
+        defaultProvider: 'did:ethr:goerli',
         providers: {
-          'did:ethr:rinkeby': new EthrDIDProvider({
+          'did:ethr:goerli': new EthrDIDProvider({
             defaultKms: 'local',
-            network: 'rinkeby',
-            rpcUrl: 'https://rinkeby.infura.io/v3/' + INFURA_PROJECT_ID,
+            network: 'goerli',
+            rpcUrl: 'https://goerli.infura.io/v3/' + INFURA_PROJECT_ID,
           }),
           'did:web': new WebDIDProvider({
             defaultKms: 'local',
