@@ -1,33 +1,3 @@
-// Core interfaces
-import { createAgent, IDIDManager, IResolver, IDataStore, IKeyManager } from '@veramo/core'
-
-// Core identity manager plugin
-import { DIDManager } from '@veramo/did-manager'
-
-// Ethr did identity provider
-import { EthrDIDProvider } from '@veramo/did-provider-ethr'
-
-// Web did identity provider
-import { WebDIDProvider } from '@veramo/did-provider-web'
-
-// Core key manager plugin
-import { KeyManager } from '@veramo/key-manager'
-
-// Custom key management system for RN
-import { KeyManagementSystem, SecretBox } from '@veramo/kms-local'
-
-// Custom resolvers
-import { DIDResolverPlugin } from '@veramo/did-resolver'
-import { Resolver } from 'did-resolver'
-import { getResolver as ethrDidResolver } from 'ethr-did-resolver'
-import { getResolver as webDidResolver } from 'web-did-resolver'
-
-// Storage plugin using TypeOrm
-import { Entities, KeyStore, DIDStore, IDataStoreORM, PrivateKeyStore, migrations } from '@veramo/data-store'
-
-// TypeORM is installed with `@veramo/data-store`
-import { createConnection } from 'typeorm'
-
 // This will be the name for the local sqlite database for demo purposes
 const DATABASE_FILE = 'database.sqlite'
 
@@ -37,20 +7,57 @@ const INFURA_PROJECT_ID = '33aab9e0334c44b0a2e0c57c15302608'
 // This will be the secret key for the KMS
 const KMS_SECRET_KEY =
   'c0710059b687bf53009f7b935903ba48334e569780851008392f3e7f595c347a'
+const { Resolver } = require('did-resolver')
+const { getResolver: ethrDidResolver } = require('ethr-did-resolver')
+const { getResolver: webDidResolver } = require('web-did-resolver')
+import { TAgent } from '@veramo/core-types'
 
-const dbConnection = createConnection({
-type: 'sqlite',
-database: DATABASE_FILE,
-synchronize: false,
-migrations,
-migrationsRun: true,
-logging: ['error', 'info', 'warn'],
-entities: Entities,
-})
+const _importDynamic = new Function('modulePath', 'return import(modulePath)')
 
-export const agent = createAgent<IDIDManager & IKeyManager & IDataStore & IDataStoreORM & IResolver>({
+async function getAgent2(): Promise<TAgent<any>> {
+  // Core interfaces
+  const { createAgent } = await import('@veramo/core')
+
+  // Core identity manager plugin
+  const { DIDManager } = await import('@veramo/did-manager')
+
+  // Ethr did identity provider
+  const { EthrDIDProvider } = await import('@veramo/did-provider-ethr')
+
+  // Web did identity provider
+  const { WebDIDProvider } = await import('@veramo/did-provider-web')
+
+  // Core key manager plugin
+  const { KeyManager } = await import('@veramo/key-manager')
+
+  // Custom key management system for RN
+  const { KeyManagementSystem, SecretBox } = await import('@veramo/kms-local')
+
+  // Custom resolvers
+  const { DIDResolverPlugin } = await import('@veramo/did-resolver')
+
+
+  // Storage plugin using TypeOrm
+  const { Entities, KeyStore, DIDStore, PrivateKeyStore, migrations } = await import('@veramo/data-store')
+
+  // TypeORM is installed with `@veramo/data-store`
+  const { createConnection } = await import('typeorm')
+
+  
+  const dbConnection = createConnection({
+    type: 'sqlite',
+    database: DATABASE_FILE,
+    synchronize: false,
+    migrations,
+    migrationsRun: true,
+    logging: ['error', 'info', 'warn'],
+    entities: Entities,
+    })
+
+  const agent = createAgent({
     plugins: [
       new KeyManager({
+        // @ts-ignore
         store: new KeyStore(dbConnection),
         kms: {
           local: new KeyManagementSystem(new PrivateKeyStore(dbConnection, new SecretBox(KMS_SECRET_KEY))),
@@ -78,3 +85,6 @@ export const agent = createAgent<IDIDManager & IKeyManager & IDataStore & IDataS
       }),
     ],
   })
+  return agent
+}
+module.exports.getAgent = getAgent2
