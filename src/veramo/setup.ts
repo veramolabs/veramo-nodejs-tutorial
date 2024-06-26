@@ -61,12 +61,12 @@ const KMS_SECRET_KEY =
       }),
       new DIDManager({
         store: new DIDStore(dbConnection),
-        defaultProvider: 'did:ethr:goerli',
+        defaultProvider: 'did:ethr:sepolia',
         providers: {
-          'did:ethr:goerli': new EthrDIDProvider({
+          'did:ethr:sepolia': new EthrDIDProvider({
             defaultKms: 'local',
-            network: 'goerli',
-            rpcUrl: 'https://goerli.infura.io/v3/' + INFURA_PROJECT_ID,
+            network: 'sepolia',
+            rpcUrl: 'https://sepolia.infura.io/v3/' + INFURA_PROJECT_ID,
           }),
           'did:web': new WebDIDProvider({
             defaultKms: 'local',
